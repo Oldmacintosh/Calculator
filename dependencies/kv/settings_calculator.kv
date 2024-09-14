@@ -1,0 +1,321 @@
+#: kivy 2.1.0
+<_Settings>: 
+    name: 'Settings'
+    on_pre_enter: root.update_screen()
+    __safe_id: [appearance_dd.__self__]
+    Widget: 
+        on_parent: appearance_dd.dismiss()
+    DropDown: 
+        id: appearance_dd
+        size_hint: .8, None
+        height: 200 * Metrics.dp
+        on_dismiss: 
+            root.status_appearance_dd = False
+            root.on_mouse_position(0, root.current_mouse_pos)
+            root.radius = [(10, 10) for num in range(4)]
+            spacing_label.height = 20 * Metrics.dp
+            button_1.background_normal = r'dependencies/icons/arrow_down.ico'
+            button_1.background_down = r'dependencies/icons/arrow_up.ico'
+        auto_width: False
+        GridLayout: 
+            rows: 6
+            size_hint: 1, None
+            height: 180 * Metrics.dp
+            canvas: 
+                Color: 
+                    rgba: root.operator_color
+                RoundedRectangle: 
+                    pos: self.pos
+                    size: (self.width - 12 * Metrics.dp, self.height * Metrics.dp)
+                    radius: [(0, 0), (0, 0), (10, 10), (10, 10)]
+            Label: 
+                size_hint: 1, None
+                height: 10 * Metrics.dp
+            GridLayout: 
+                cols: 3
+                size_hint: 1, None
+                height: 35 * Metrics.dp
+                Label: 
+                    size_hint: None, 1
+                    width: 35 * Metrics.dp
+                CheckBox: 
+                    id: checkbox_0
+                    group: 'check'
+                    size_hint: None, 1
+                    width: 65 * Metrics.dp
+                    color: root.text_color
+                    on_active: root.on_active_checkbox_0()
+                    allow_no_selection: False
+                Label: 
+                    size_hint: None, 1
+                    width: 105 * Metrics.dp
+                    text: 'Light Theme'
+                    font_size: 15 * Metrics.sp
+                    text_size: self.size
+                    halign: 'left'
+                    valign: 'middle'
+                    color: root.text_color
+            Label: 
+                size_hint: 1, None
+                height: 20 * Metrics.dp
+            GridLayout: 
+                cols: 3
+                size_hint: 1, None
+                height: 35 * Metrics.dp
+                Label: 
+                    size_hint: None, 1
+                    width: 35 * Metrics.dp
+                CheckBox: 
+                    id: checkbox_1
+                    group: 'check'
+                    size_hint: None, 1
+                    width: 65 * Metrics.dp
+                    color: root.text_color
+                    on_active: root.on_active_checkbox_1()
+                    allow_no_selection: False
+                Label: 
+                    size_hint: None, 1
+                    width: 105 * Metrics.dp
+                    text: 'Dark Theme'
+                    font_size: 15 * Metrics.sp
+                    text_size: self.size
+                    halign: 'left'
+                    valign: 'middle'
+                    color: root.text_color
+            Label: 
+                size_hint: 1, None
+                height: 20 * Metrics.dp
+            GridLayout: 
+                cols: 3
+                size_hint: 1, None
+                height: 35 * Metrics.dp
+                Label: 
+                    size_hint: None, 1
+                    width: 35 * Metrics.dp
+                CheckBox: 
+                    id: checkbox_2
+                    group: 'check'
+                    size_hint: None, 1
+                    width: 65 * Metrics.dp
+                    color: root.text_color
+                    on_active: root.on_active_checkbox_2()
+                    allow_no_selection: False
+                Label: 
+                    size_hint: None, 1
+                    width: 105 * Metrics.dp
+                    text: 'OS Settings'
+                    font_size: 15 * Metrics.sp
+                    text_size: self.size
+                    halign: 'left'
+                    valign: 'middle'
+                    color: root.text_color
+
+    AnchorLayout: 
+        anchor_x: 'left'
+        anchor_y: 'top'
+        GridLayout: 
+            cols: 3
+            size_hint: 1, None
+            height: 60 * Metrics.dp if Metrics.dpi < 100 else 50 * Metrics.dp
+            Label: 
+                size_hint: None, 1
+                width: 5 * Metrics.dp
+            Button: 
+                id: button_0
+                size_hint: None, 1
+                width: 60 * Metrics.dp if Metrics.dpi < 100 else 50 * Metrics.dp
+                background_normal: r'dependencies/icons/arrow_back_pressed.ico'
+                background_down: r'dependencies/icons/arrow_back.ico'
+                background_color: [1, 1, 1, 1]
+                allow_stretch: False
+                on_press: root.button_press = True
+                on_release: 
+                    if root.screen == 'Standard': app.root.transition = SlideTransition(
+                    direction = 'left')
+                    if root.screen == 'Quadratic': app.root.transition = SlideTransition(
+                    direction = 'right')
+                    app.root.current = root.screen
+                    root.button_press = False
+                    root.on_mouse_position(0, root.current_mouse_pos)
+                    root.on_mouse_position(0, root.current_mouse_pos)
+                always_release: True
+            Label: 
+                size_hint: None, 1
+                width: 90 * Metrics.dp
+                text: 'Settings'
+                font_size: 20 * Metrics.sp
+                color: root.text_color
+    GridLayout: 
+        cols: 3
+        Label: 
+            size_hint: None, 1
+            width: 10 * Metrics.dp
+        GridLayout: 
+            rows: 6
+            Label: 
+                size_hint: 1, None
+                height: 50 * Metrics.dp
+            GridLayout: 
+                cols: 3
+                size_hint: 1, None
+                height: 50 * Metrics.dp
+                Label: 
+                    size_hint: .3, 1
+                    text: 'Appearance'
+                    font_size: 15 * Metrics.sp
+                    text_size: self.size
+                    halign: 'left'
+                    valign: 'middle'
+                    color: root.text_color
+                Label: 
+                    size_hint: .5, 1
+                Label: 
+                    size_hint: .2, 1
+                    text: ''
+                    text_size: self.size
+                    halign: 'left'
+                    valign: 'middle'
+            GridLayout: 
+                cols: 3
+                size_hint: .8, None
+                height: 70 * Metrics.dp
+                GridLayout: 
+                    id: appearance_grid
+                    cols: 4
+                    size_hint: .8, None
+                    height: 70 * Metrics.dp
+                    canvas: 
+                        Color: 
+                            rgba: root.operator_color
+                        RoundedRectangle: 
+                            pos: self.pos
+                            size: self.size
+                            radius: root.radius
+                    Label: 
+                        size_hint: None, None
+                        height: 60 * Metrics.dp
+                        width: 40 * Metrics.dp
+                        background_down: ''
+                        background_normal: ''
+                        background_color: [0, 0, 0, 0]
+                        Image: 
+                            source: r'dependencies/icons/Theme.ico'
+                            center_x: self.parent.center_x
+                            center_y: self.parent.center_y + 5 * Metrics.dp
+                            size: 35 * Metrics.dp, 35 * Metrics.dp
+                    Label: 
+                        size_hint: None, 1
+                        width: 10 * Metrics.dp
+                    Label: 
+                        text: 
+                            f'''App Theme\n[size={int(12 * Metrics.dp)}][color=8e8e8e]Select which app theme to {""
+                            }display[/color][/size]'''
+                        font_size: 18 * Metrics.sp
+                        text_size: self.size
+                        halign: 'left'
+                        valign: 'middle'
+                        color: root.text_color
+                        markup: True
+                    GridLayout: 
+                        rows: 3
+                        size_hint: None, 1
+                        width: 60 * Metrics.dp
+                        Label: 
+                            size_hint: None, None
+                            height: 30 * Metrics.dp
+                            width: 30 * Metrics.dp
+                        Button: 
+                            id: button_1
+                            text: ''
+                            size_hint: None, None
+                            height: 20 * Metrics.dp
+                            width: 20 * Metrics.dp
+                            background_normal: r'dependencies/icons/arrow_down.ico'
+                            background_down: r'dependencies/icons/arrow_up.ico'
+                            border: (0 for no in range(4))
+                            background_color: [1, 1, 1, 1]
+                            on_press: root.button_press = True
+                            on_release: 
+                                appearance_dd.open(appearance_grid)
+                                root.status_appearance_dd = True
+                                root.button_press = False
+                                root.radius = [(10, 10), (10, 10), (0, 0), (0, 0)]
+                                button_1.background_normal = r'dependencies/icons/arrow_up.ico'
+                                button_1.background_down = r'dependencies/icons/arrow_down.ico'
+                                spacing_label.height = 200 * Metrics.dp
+                            on_release: 
+                                Clock.schedule_once(lambda * arg: 
+                                root.on_mouse_position(1, root.current_mouse_pos))
+                                Clock.schedule_once(lambda * arg: 
+                                root.on_mouse_position(1, root.current_mouse_pos))
+                            always_release: True
+                            allow_stretch: False
+                        Label: 
+                            size_hint: None, None
+                            height: 20 * Metrics.dp
+                            width: 30 * Metrics.dp
+                Label: 
+                    size_hint: .2, None
+                    height: 60 * Metrics.dp
+            Label: 
+                id: spacing_label
+                size_hint: 1, None
+                height: 20 * Metrics.dp
+            GridLayout: 
+                cols: 3
+                size_hint: 1, None
+                height: 20 * Metrics.dp
+                Label: 
+                    size_hint: .3, 1
+                    text: 'About'
+                    font_size: 15 * Metrics.sp
+                    text_size: self.size
+                    halign: 'left'
+                    valign: 'middle'
+                    color: root.text_color
+                Label: 
+                    size_hint: .42, 1
+                Label: 
+                    size_hint: .28, 1
+                    text: ''
+                    text_size: self.size
+                    halign: 'left'
+                    valign: 'middle'
+            Label: 
+                text: f'Calculator {root.version},  [ref=More Info.][color=3366CC]More Info.{""}[/color][/ref]'
+                size_hint: None, None
+                height: 40 * Metrics.dp
+                width: 300 * Metrics.dp
+                font_size: 14  * Metrics.sp
+                text_size: self.size
+                halign: 'left'
+                valign: 'middle'
+                color: root.text_color
+                on_ref_press: root.on_ref_press()
+                markup: True
+        Label: 
+            size_hint: None, 1
+            width: 5 * Metrics.dp
+    Button: 
+        pos: appearance_grid.pos
+        size_hint: None, None
+        width: appearance_grid.size[0]
+        height: appearance_grid.size[1]
+        background_down: ''
+        background_normal: ''
+        background_color: [0, 0, 0, 0]
+        on_press: root.button_press = True
+        on_release: 
+            appearance_dd.open(appearance_grid)
+            root.status_appearance_dd = True
+            root.button_press = False
+            root.radius = [(10, 10), (10, 10), (0, 0), (0, 0)]
+            button_1.background_normal = r'dependencies/icons/arrow_up.ico'
+            button_1.background_down = r'dependencies/icons/arrow_down.ico'
+            spacing_label.height = 200 * Metrics.dp
+        on_release: 
+            Clock.schedule_once(lambda * arg: 
+            root.on_mouse_position(1, root.current_mouse_pos))
+            Clock.schedule_once(lambda * arg: 
+            root.on_mouse_position(1, root.current_mouse_pos))
+        always_release: True

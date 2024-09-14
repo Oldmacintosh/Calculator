@@ -1,0 +1,607 @@
+#: kivy 2.1.0
+<Quadratic>:
+    name: 'Quadratic'
+    on_pre_enter: root.update_screen()
+    __safe_id: [quadratic_dd.__self__]
+    Widget: 
+        on_parent: quadratic_dd.dismiss()
+    DropDown: 
+        id: quadratic_dd
+        size_hint: None, None
+        width: 225 * Metrics.dp
+        height: 185 * Metrics.dp
+        on_dismiss: 
+            root.status_dd = False
+            root.on_mouse_position(0, root.current_mouse_pos)
+        auto_width: False
+        GridLayout: 
+            size_hint: None, None
+            width: 220 * Metrics.dp
+            height: 185 * Metrics.dp
+            rows: 6
+            canvas: 
+                Color: 
+                    rgba: root.operator_color
+                RoundedRectangle: 
+                    pos: (self.x, self.y)
+                    size: (225 * Metrics.dp, 185 * Metrics.dp)
+                    radius: [(0, 0), (20, 20), (20, 20), (0, 0)]
+            Label: 
+                size_hint: 1, None
+                height: 40 * Metrics.dp
+                text: '   [color=8e8e8e][b]Calculator[/b][/color]'
+                font_size: 15 * Metrics.sp
+                markup: True
+                text_size: self.size
+                halign: 'left'
+                valign: 'middle'
+            Button: 
+                id: button_1
+                size_hint: 1, None
+                height: 35 * Metrics.dp
+                text: '               Standard'
+                font_size: 14 * Metrics.sp
+                text_size: self.size
+                halign: 'left'
+                valign: 'middle'
+                color: root.text_color
+                background_normal: ''
+                background_down: ''
+                background_color: root.operator_color
+                on_press: 
+                    root.change_color_on_press(self)
+                    quadratic_dd_button.background_color = root.operator_color
+                on_release: 
+                    app.root.transition = SlideTransition(direction='right')
+                    app.root.current = 'Standard'
+                on_release:
+                    quadratic_dd.dismiss()
+                    root.change_color_on_release(self)
+                always_release: True
+                Image: 
+                    source: r'dependencies/icons/Standard.ico'
+                    center_x: self.parent.center_x - 90 * Metrics.dp
+                    center_y: self.parent.center_y
+                    size: 20 * Metrics.dp, 20 * Metrics.dp
+            Label: 
+                size_hint: 1, None
+                height: 3 * Metrics.dp
+            Button: 
+                id: quadratic_dd_button
+                size_hint: 1, None
+                height: 35 * Metrics.dp
+                text: '               Quadratic'
+                font_size: 14 * Metrics.sp
+                text_size: self.size
+                halign: 'left'
+                valign: 'middle'
+                color: root.text_color
+                background_normal: ''
+                background_down: ''
+                background_color: root.button_color
+                Image: 
+                    source: r'dependencies/icons/Quadratic.ico'
+                    center_x: self.parent.center_x - 90 * Metrics.dp
+                    center_y: self.parent.center_y
+                    size: 20 * Metrics.dp, 20 * Metrics.dp
+            Label: 
+                size_hint: 1, None
+                height: 20 * Metrics.dp
+            Button: 
+                id: button_2
+                size_hint: 1, None
+                height: 40 * Metrics.dp
+                text: '               Settings'
+                font_size: 14 * Metrics.sp
+                text_size: self.size
+                halign: 'left'
+                valign: 'middle'
+                color: root.text_color
+                background_normal: ''
+                background_down: ''
+                background_color: root.operator_color
+                on_press: 
+                    root.change_color_on_press(self)
+                    quadratic_dd_button.background_color = root.operator_color
+                on_release: 
+                    app.root.transition = SlideTransition(direction='left')
+                    app.root.current = 'Settings'
+                on_release:
+                    quadratic_dd.dismiss()
+                    root.change_color_on_release(self)
+                always_release: True
+                canvas.before: 
+                    Color: 
+                        rgba: root.button_color
+                    Line: 
+                        width: 1
+                        points: self.x - 5 * Metrics.dp, self.y + 50 * Metrics.dp, self.width + 10 * Metrics.dp, self.y + 50 * Metrics.dp
+                Image: 
+                    source: r'dependencies/icons/Settings.ico'
+                    center_x: self.parent.center_x - 90 * Metrics.dp
+                    center_y: self.parent.center_y
+                    size: 25 * Metrics.dp, 25 * Metrics.dp
+    AnchorLayout: 
+        anchor_x: 'left'
+        anchor_y: 'top'
+        GridLayout: 
+            cols: 3
+            size_hint: 1, None
+            height: 60 * Metrics.dp if Metrics.dpi < 100 else 50 * Metrics.dp
+            Label: 
+                size_hint: None, 1
+                width: 5 * Metrics.dp
+            Button: 
+                id: button_0
+                size_hint: None, 1
+                width: 60 * Metrics.dp if Metrics.dpi < 100 else 50 * Metrics.dp
+                background_normal: r'dependencies/icons/menu.ico'
+                background_disabled_normal: r'dependencies/icons/menu_pressed.ico'
+                background_down: r'dependencies/icons/menu_pressed.ico'
+                border: 10, 10, 10, 10
+                background_color: [1, 1, 1, 1]
+                on_press: root.button_press = True
+                on_release: 
+                    quadratic_dd.open(self)
+                    root.status_dd = True
+                    root.button_press = False
+                on_release:
+                    Clock.schedule_once(lambda * arg: 
+                    root.on_mouse_position(0, root.current_mouse_pos))
+                on_release:
+                    Clock.schedule_once(lambda * arg: 
+                    root.on_mouse_position(0, root.current_mouse_pos))
+                always_release: True
+            Label: 
+                size_hint: None, 1
+                width: 90 * Metrics.dp
+                text: 'Quadratic'
+                font_size: 20 * Metrics.sp
+                color: root.text_color
+    GridLayout: 
+        id: main_grid_layout
+        cols: 4
+        Label: 
+            size_hint: None, 1
+            width: 5 * Metrics.dp
+        GridLayout: 
+            rows: 2
+            GridLayout: 
+                size_hint: 1, .8
+                rows: 6
+                Label: 
+                    size_hint: 1, None
+                    height: 62 * Metrics.dp
+                GridLayout: 
+                    cols: 8
+                    rows: 1
+                    size_hint: 1, .7
+                    Label: 
+                        size_hint: None, 1
+                        width: 2 * Metrics.dp
+                    TextInput: 
+                        id: a
+                        group: 'text_input'
+                        font_size: root.height * 0.05
+                        halign: 'right'
+                        input_filter: 'float'
+                        background_color: [0, 0, 0, 0]
+                        on_text: root.solve_equation(); root.check_text_input_length(self)
+                        multiline: False
+                        scroll_from_swipe: True
+                        padding_y: 
+                            [self.height / 2.0 - (self.line_height / 2.0) * len(self._lines), 0]
+                        canvas.before: 
+                            Color: 
+                                rgba: root.input_color_a
+                            Line: 
+                                width: 1.5 * Metrics.dp
+                                rectangle: self.x, self.y, self.width, self.height
+                    Label: 
+                        size_hint: .4, 1
+                        padding_x: 6 * Metrics.dp
+                        text: 'x²'
+                        font_size: root.height * 0.038
+                        text_size: self.size
+                        halign: 'left'
+                        valign: 'middle'
+                        color: root.text_color
+                    Label: 
+                        text: '+'
+                        size_hint: .45, 1
+                        font_size: root.height * 0.04
+                        text_size: self.size
+                        halign: 'left'
+                        valign: 'middle'
+                        color: root.text_color
+                    TextInput: 
+                        id: b
+                        group: 'text_input'
+                        font_size: root.height * 0.05
+                        halign: 'right'
+                        input_filter: 'float'
+                        background_color: [0, 0, 0, 0]
+                        on_text: root.solve_equation(); root.check_text_input_length(self)
+                        multiline: False
+                        scroll_from_swipe: True
+                        padding_y: 
+                            [self.height / 2.0 - (self.line_height / 2.0) * len(self._lines), 0]
+                        canvas.before: 
+                            Color: 
+                                rgba: root.input_color_b
+                            Line: 
+                                width: 1.5 * Metrics.dp
+                                rectangle: self.x, self.y, self.width, self.height
+                    Label: 
+                        size_hint: .4, 1
+                        padding_x: 6 * Metrics.dp
+                        text: 'x'
+                        font_size: root.height * 0.038
+                        text_size: self.size
+                        halign: 'left'
+                        valign: 'middle'
+                        color: root.text_color
+                    Label: 
+                        text: '+'
+                        size_hint: .45, 1
+                        font_size: root.height * 0.04
+                        text_size: self.size
+                        halign: 'left'
+                        valign: 'middle'
+                        color: root.text_color
+                    GridLayout: 
+                        cols: 2
+                        TextInput: 
+                            id: c
+                            group: 'text_input'
+                            font_size: root.height * 0.05
+                            halign: 'right'
+                            input_filter: 'float'
+                            background_color: [0, 0, 0, 0]
+                            on_text: root.solve_equation(); root.check_text_input_length(self)
+                            multiline: False
+                            scroll_from_swipe: True
+                            padding_y: 
+                                [self.height / 2.0 - (self.line_height / 2.0) * len(self._lines), 
+                                0]
+                            canvas.before: 
+                                Color: 
+                                    rgba: root.input_color_c
+                                Line: 
+                                    width: 1.5 * Metrics.dp
+                                    rectangle: self.x, self.y, self.width, self.height
+                        Label: 
+                            size_hint: None, 1
+                            width: 5 * Metrics.dp
+                Label: 
+                    size_hint: 1, .35
+                    text: root.equation_text
+                    font_size: root.height * 0.03
+                    text_size: self.size
+                    halign: 'center'
+                    valign: 'bottom'
+                    color: root.text_color
+                    markup: True
+                LabelLikeTextInput: 
+                    size_hint: 1, .6
+                    text: root.main_text
+                    font_size: root.height * 0.04
+                    foreground_color: root.text_color
+                GridLayout: 
+                    cols: 2
+                    rows: 3
+                    LabelLikeTextInput: 
+                        text: root.discriminant_text
+                        font_size: root.height * 0.03
+                        foreground_color: root.text_color
+                    LabelLikeTextInput: 
+                        text: root.por_text
+                        font_size: root.height * 0.03
+                        foreground_color: root.text_color
+                    LabelLikeTextInput: 
+                        text: root.vertex_text
+                        font_size: root.height * 0.03
+                        foreground_color: root.text_color
+                    LabelLikeTextInput: 
+                        text: root.sor_text
+                        font_size: root.height * 0.03
+                        foreground_color: root.text_color
+            GridLayout: 
+                rows: 3
+                GridLayout: 
+                    rows: 4
+                    cols: 3
+                    Button: 
+                        id: button_3
+                        text: '7'
+                        font_size: 0.03 * root.height
+                        color: root.text_color
+                        background_normal: ''
+                        background_color: root.button_color
+                        background_down: ''
+                        on_press: root.change_color_on_press(self); root.keypad_button_press = True
+                        on_release: root.change_color_on_release(self); root.on_num_click(self)
+                        on_release: root.keypad_button_press = False
+                        always_release: True
+                        canvas.before: 
+                            Color: 
+                                rgba: root.canvas_color
+                            Line: 
+                                width: 2
+                                rectangle: self.x, self.y, self.width, self.height
+                    Button: 
+                        id: button_4
+                        text: '8'
+                        font_size: 0.03 * root.height
+                        color: root.text_color
+                        background_normal: ''
+                        background_color: root.button_color
+                        background_down: ''
+                        on_press: root.change_color_on_press(self); root.keypad_button_press = True
+                        on_release: root.change_color_on_release(self); root.on_num_click(self)
+                        on_release: root.keypad_button_press = False
+                        always_release: True
+                        canvas.before: 
+                            Color: 
+                                rgba: root.canvas_color
+                            Line: 
+                                width: 2
+                                rectangle: self.x, self.y, self.width, self.height
+                    Button: 
+                        id: button_5
+                        text: '9'
+                        font_size: 0.03 * root.height
+                        color: root.text_color
+                        background_normal: ''
+                        background_color: root.button_color
+                        background_down: ''
+                        on_press: root.change_color_on_press(self); root.keypad_button_press = True
+                        on_release: root.on_num_click(self); root.change_color_on_release(self)
+                        on_release: root.keypad_button_press = False
+                        always_release: True
+                        canvas.before: 
+                            Color: 
+                                rgba: root.canvas_color
+                            Line: 
+                                width: 2
+                                rectangle: self.x, self.y, self.width, self.height
+                    Button: 
+                        id: button_6
+                        text: '4'
+                        font_size: 0.03 * root.height
+                        color: root.text_color
+                        background_normal: ''
+                        background_color: root.button_color
+                        background_down: ''
+                        on_press: root.change_color_on_press(self); root.keypad_button_press = True
+                        on_release: root.on_num_click(self); root.change_color_on_release(self)
+                        on_release: root.keypad_button_press = False
+                        always_release: True
+                        canvas.before: 
+                            Color: 
+                                rgba: root.canvas_color
+                            Line: 
+                                width: 2
+                                rectangle: self.x, self.y, self.width, self.height
+                    Button: 
+                        id: button_7
+                        text: '5'
+                        font_size: 0.03 * root.height
+                        color: root.text_color
+                        background_normal: ''
+                        background_color: root.button_color
+                        background_down: ''
+                        on_press: root.change_color_on_press(self); root.keypad_button_press = True
+                        on_release: root.on_num_click(self); root.change_color_on_release(self)
+                        on_release: root.keypad_button_press = False
+                        always_release: True
+                        canvas.before: 
+                            Color: 
+                                rgba: root.canvas_color
+                            Line: 
+                                width: 2
+                                rectangle: self.x, self.y, self.width, self.height
+                    Button: 
+                        id: button_8
+                        text: '6'
+                        font_size: 0.03 * root.height
+                        color: root.text_color
+                        background_normal: ''
+                        background_color: root.button_color
+                        background_down: ''
+                        on_press: root.change_color_on_press(self); root.keypad_button_press = True
+                        on_release: root.on_num_click(self); root.change_color_on_release(self)
+                        on_release: root.keypad_button_press = False
+                        always_release: True
+                        canvas.before: 
+                            Color: 
+                                rgba: root.canvas_color
+                            Line: 
+                                width: 2
+                                rectangle: self.x, self.y, self.width, self.height
+                    Button: 
+                        id: button_9
+                        text: '1'
+                        font_size: 0.03 * root.height
+                        color: root.text_color
+                        background_normal: ''
+                        background_color: root.button_color
+                        background_down: ''
+                        on_press: root.change_color_on_press(self); root.keypad_button_press = True
+                        on_release: root.on_num_click(self); root.change_color_on_release(self)
+                        on_release: root.keypad_button_press = False
+                        always_release: True
+                        canvas.before: 
+                            Color: 
+                                rgba: root.canvas_color
+                            Line: 
+                                width: 2
+                                rectangle: self.x, self.y, self.width, self.height
+                    Button: 
+                        id: button_10
+                        text: '2'
+                        font_size: 0.03 * root.height
+                        color: root.text_color
+                        background_normal: ''
+                        background_color: root.button_color
+                        background_down: ''
+                        on_press: root.change_color_on_press(self); root.keypad_button_press = True
+                        on_release: root.on_num_click(self); root.change_color_on_release(self)
+                        on_release: root.keypad_button_press = False
+                        always_release: True
+                        canvas.before: 
+                            Color: 
+                                rgba: root.canvas_color
+                            Line: 
+                                width: 2
+                                rectangle: self.x, self.y, self.width, self.height
+                    Button: 
+                        id: button_11
+                        text: '3'
+                        font_size: 0.03 * root.height
+                        color: root.text_color
+                        background_normal: ''
+                        background_color: root.button_color
+                        background_down: ''
+                        on_press: root.change_color_on_press(self); root.keypad_button_press = True
+                        on_release: root.on_num_click(self); root.change_color_on_release(self)
+                        on_release: root.keypad_button_press = False
+                        always_release: True
+                        canvas.before: 
+                            Color: 
+                                rgba: root.canvas_color
+                            Line: 
+                                width: 2
+                                rectangle: self.x, self.y, self.width, self.height
+                    Button: 
+                        id: button_12
+                        text: '.'
+                        font_size: 0.03 * root.height
+                        color: root.text_color
+                        background_normal: ''
+                        background_color: root.button_color
+                        background_down: ''
+                        on_press: root.change_color_on_press(self); root.keypad_button_press = True
+                        on_release: root.on_decimal_click(); root.change_color_on_release(self)
+                        on_release: root.keypad_button_press = False
+                        always_release: True
+                        canvas.before: 
+                            Color: 
+                                rgba: root.canvas_color
+                            Line: 
+                                width: 2
+                                rectangle: self.x, self.y, self.width, self.height
+                    Button: 
+                        id: button_13
+                        text: '0'
+                        font_size: 0.03 * root.height
+                        color: root.text_color
+                        background_normal: ''
+                        background_color: root.button_color
+                        background_down: ''
+                        on_press: root.change_color_on_press(self); root.keypad_button_press = True
+                        on_release: root.on_zero_click(); root.change_color_on_release(self)
+                        on_release: root.keypad_button_press = False
+                        always_release: True
+                        canvas.before: 
+                            Color: 
+                                rgba: root.canvas_color
+                            Line: 
+                                width: 2
+                                rectangle: self.x, self.y, self.width, self.height
+                    Button: 
+                        id: button_14
+                        text: '±'
+                        font_size: 0.03 * root.height
+                        color: root.text_color
+                        background_normal: ''
+                        background_color: root.button_color
+                        background_down: ''
+                        on_press: root.change_color_on_press(self); root.keypad_button_press = True
+                        on_release: root.plus_minus(); root.change_color_on_release(self)
+                        on_release: root.keypad_button_press = False
+                        always_release: True
+                        canvas.before: 
+                            Color: 
+                                rgba: root.canvas_color
+                            Line: 
+                                width: 2
+                                rectangle: self.x, self.y, self.width, self.height
+                Button: 
+                    id: button_15
+                    size_hint: .2, .2
+                    text: '[b]⌫[/b]'
+                    font_name: r'dependencies/fonts/Bainsley.ttf'
+                    font_size: 0.045 * root.height
+                    color: root.text_color
+                    background_normal: ''
+                    background_color: root.button_color
+                    background_down: ''
+                    on_press: root.change_color_on_press(self); root.keypad_button_press = True
+                    on_release: root.backspace(); root.change_color_on_release(self)
+                    on_release: root.keypad_button_press = False
+                    always_release: True
+                    markup: True
+                    canvas.before: 
+                        Color: 
+                            rgba: root.canvas_color
+                        Line: 
+                            width: 2
+                            rectangle: self.x, self.y, self.width, self.height
+                Label: 
+                    size_hint: 1, None
+                    height: 5 * Metrics.dp
+        Label: 
+            size_hint: None, 1
+            width: 5 * Metrics.dp
+        GridLayout: 
+            id: box_graph
+            rows: 4
+            BoxLayout: 
+                id: graph1
+            ProgressBar: 
+                id: pg
+                size_hint: .2, None
+                height: 10 * Metrics.dp
+            GridLayout: 
+                size_hint: 1, None
+                height: 65 * Metrics.dp if Metrics.dpi < 100 else 55 * Metrics.dp
+                cols: 3
+                Label: 
+                    size_hint: None, 1
+                    width: 65 * Metrics.dp
+                LabelLikeTextInput: 
+                    id: coordinates_label
+                    size_hint: 1, 1
+                    text: root.coordinates_text
+                    foreground_color: root.text_color
+                Button: 
+                    id: button_16
+                    size_hint: None, 1
+                    width: 65 * Metrics.dp if Metrics.dpi < 100 else 55 * Metrics.dp
+                    background_normal: r'dependencies/icons/trash.ico'
+                    background_down: r'dependencies/icons/trash_pressed.ico'
+                    background_color: root.trash_color
+                    on_press: root.on_press_trash_button()
+                    on_release: root.on_release_trash_button()
+                    disabled: root.trash_status
+                    allow_stretch: True
+                    always_release: True
+            GridLayout: 
+                size_hint: 1, None
+                height: 65 * Metrics.dp
+                cols: 2
+                Slider: 
+                    id: sld
+                    min: 0.1
+                    max: 2
+                    value: 0.5
+                    value_track_color: [1, .5, 0, 1]
+                    on_value: root.on_value_slider()
+                    value_track: True
+                    disabled: root.slider_status
+                Switch: 
+                    id: sld_switch
+                    size_hint: None, 1
+                    width: 80 * Metrics.dp
+                    on_active: root.on_active_switch(self, self.active)
